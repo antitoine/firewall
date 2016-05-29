@@ -1,0 +1,16 @@
+[Unit]
+SourcePath=/etc/init.d/firewall
+Description=Firewall
+Before=runlevel2.target runlevel3.target runlevel4.target runlevel5.target shutdown.target
+After=local-fs.target remote-fs.target network-online.target systemd-journald-dev-log.socket nss-lookup.target
+Wants=network-online.target
+Conflicts=shutdown.target
+
+[Service]
+Type=oneshot
+TimeoutSec=0
+KillMode=process
+RemainAfterExit=yes
+SysVStartPriority=2
+ExecStart=/etc/init.d/firewall start
+ExecStop=/etc/init.d/firewall stop
